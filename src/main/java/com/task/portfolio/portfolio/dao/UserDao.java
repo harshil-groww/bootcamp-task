@@ -13,20 +13,20 @@ public class UserDao {
 
     private UserRepository userRepository;
 
-//    public UserDao(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
 
-    public List<Portfolio> getPortfolio(Long userId) {
-        Optional<User> user = userRepository.getById(userId);
+    public User getUser(String userId) {
+        Optional<User> user = userRepository.findById(userId);
 
         if (user.isEmpty()) {
 //            throw exception
         }
 
-
-        return user.get().getPortfolios();
+        return user.get();
     }
+    public List<Portfolio> getPortfolios(String userId) {
 
+        User user = getUser(userId);
 
+        return user.getPortfolios();
+    }
 }
