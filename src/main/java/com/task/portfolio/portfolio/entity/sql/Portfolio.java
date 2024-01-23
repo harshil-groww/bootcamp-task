@@ -8,10 +8,8 @@ import java.util.Date;
 
 @Entity
 @Data
-@AllArgsConstructor
 @RequiredArgsConstructor
-@NoArgsConstructor
-@Builder
+//@NoArgsConstructor
 @Table
 public class Portfolio {
 
