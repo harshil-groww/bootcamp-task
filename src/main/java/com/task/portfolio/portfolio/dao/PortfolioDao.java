@@ -1,5 +1,6 @@
 package com.task.portfolio.portfolio.dao;
 
+import com.task.portfolio.portfolio.Exception.NotFoundException;
 import com.task.portfolio.portfolio.dto.TradeDTO;
 import com.task.portfolio.portfolio.entity.sql.Portfolio;
 import com.task.portfolio.portfolio.entity.sql.Stock;
@@ -17,7 +18,6 @@ import java.util.Optional;
 public class PortfolioDao {
 
     private final PortfolioRepository portfolioRepository;
-    private final UserRepository userRepository;
     private final UserDao userDao;
     private final StockDao stockDao;
 
@@ -49,10 +49,10 @@ public class PortfolioDao {
     public Portfolio getPortfolio(String isin, User user)
     {
         Optional<Portfolio> portfolio = portfolioRepository.findByIsinAndUser(isin, user);
-        if(portfolio.isEmpty())
-        {
-            //E
-        }
+//        if(portfolio.isEmpty())
+//        {
+//            throw new NotFoundException("no items available in portfolio");
+//        }
 
         return portfolio.get();
     }

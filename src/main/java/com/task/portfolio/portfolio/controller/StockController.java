@@ -21,11 +21,11 @@ public class StockController {
     private final StockServices stockServices;
 
     @GetMapping
-    public ResponseEntity<Stock> getStock(@RequestParam String isin) {
+    public ResponseEntity<?> getStock(@RequestParam String isin) {
         try {
             return new ResponseEntity<>(stockServices.getStock(isin), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 

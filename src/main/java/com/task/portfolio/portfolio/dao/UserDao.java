@@ -1,5 +1,6 @@
 package com.task.portfolio.portfolio.dao;
 
+import com.task.portfolio.portfolio.Exception.NotFoundException;
 import com.task.portfolio.portfolio.entity.sql.Portfolio;
 //import com.task.portfolio.portfolio.entity.sql.User;
 import com.task.portfolio.portfolio.entity.sql.User;
@@ -25,7 +26,7 @@ public class UserDao {
         Optional<User> userDetails = userRepository.findById(userId);
 
         if (userDetails.isEmpty()) {
-//            throw exception
+            throw new NotFoundException("user not found");
         }
 
         return userDetails.get();

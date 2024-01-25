@@ -20,15 +20,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-//@AllArgsConstructor
-//@NoArgsConstructor
 @RequiredArgsConstructor
 @RequestMapping("users")
 public class UserController {
 
     private final UserDao userDao;
     @PostMapping("/add")
-    public ResponseEntity<User> addUser(@Valid @RequestBody User user){
+    public ResponseEntity<?> addUser(@Valid @RequestBody User user){
 
         try{
             user = userDao.addUser(user);
@@ -36,19 +34,19 @@ public class UserController {
         }
         catch (Exception e){
 
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseMessage("Failed to add user"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/portfolio")
-    public ResponseEntity<List<Portfolio>> getPortfolios(@RequestParam Long userId)
+    public ResponseEntity<?> getPortfolios(@RequestParam Long userId)
     {
         try{
             List<Portfolio> portfolios = userDao.getPortfolios(userId);
             return new ResponseEntity<>(portfolios, HttpStatus.OK);
         }
         catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 

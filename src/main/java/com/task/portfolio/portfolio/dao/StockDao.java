@@ -1,5 +1,6 @@
 package com.task.portfolio.portfolio.dao;
 
+import com.task.portfolio.portfolio.Exception.NotFoundException;
 import com.task.portfolio.portfolio.dto.StockDTO;
 import com.task.portfolio.portfolio.entity.sql.Stock;
 import com.task.portfolio.portfolio.repository.StockRepository;
@@ -18,7 +19,7 @@ public class StockDao {
 
         if(stock.isEmpty())
         {
-            return null;
+            throw new NotFoundException("stock not found");
         }
         return stock.get();
     }
