@@ -54,9 +54,9 @@ public class TradeServicesImpl implements TradeServices {
     @Override
     public void addTrade(TradeDTO tradeDTO) {
 
-        if (tradeDTO.getTypeOfTrade() == TradeType.SELL) {
+        if (tradeDTO.getTypeOfTrade().equalsIgnoreCase("sell")) {
             sellTrade(tradeDTO);
-        } else if (tradeDTO.getTypeOfTrade() == TradeType.BUY) {
+        } else if (tradeDTO.getTypeOfTrade().equalsIgnoreCase("buy")) {
             buyTrade(tradeDTO);
         } else {
             //E

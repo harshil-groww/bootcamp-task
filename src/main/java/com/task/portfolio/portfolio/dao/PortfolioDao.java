@@ -6,18 +6,20 @@ import com.task.portfolio.portfolio.entity.sql.Stock;
 import com.task.portfolio.portfolio.entity.sql.User;
 import com.task.portfolio.portfolio.repository.PortfolioRepository;
 import com.task.portfolio.portfolio.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class PortfolioDao {
 
-    private PortfolioRepository portfolioRepository;
-    private UserRepository userRepository;
-    private UserDao userDao;
-    private StockDao stockDao;
+    private final PortfolioRepository portfolioRepository;
+    private final UserRepository userRepository;
+    private final UserDao userDao;
+    private final StockDao stockDao;
 
 
     public List<Portfolio> getAllPortfolios(Long userId)
@@ -35,6 +37,8 @@ public class PortfolioDao {
         portfolio.setQuantity(qnt);
         portfolio.setBuyPrice(price);
         portfolio.setUser(user);
+
+        System.out.println("here");
 
         portfolioRepository.save(portfolio);
     }

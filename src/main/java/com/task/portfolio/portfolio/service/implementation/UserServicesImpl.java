@@ -14,8 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServicesImpl implements UserServices {
 
-    private PortfolioDao portfolioDao;
-    private StockDao stockDao;
+    private final PortfolioDao portfolioDao;
+    private final StockDao stockDao;
 
     @Override
     public PortfolioResponse getPortfolio(Long userId) {
@@ -35,16 +35,16 @@ public class UserServicesImpl implements UserServices {
         for (Portfolio portfolio : portfolios) {
             Holdings holding = new Holdings();
 
-            holding.setName(portfolio.getName());
+            holding.setName((stockDao.getStock(portfolio.getIsin())).getName());
             holding.setId(portfolio.getIsin());
             holding.setQuantity(portfolio.getQuantity());
             holding.setBuyPrice(portfolio.getBuyPrice());
-            holding.setCurrentPrice(stockDao.getOpen(portfolio.getId()));
-            holding.setGainLoss(stockDao.getOpen(portfolio.getId())-portfolio.getBuyPrice());
+            holding.setCurrentPrice(stockDao.getOpen(portfolio.getIsin()));
+            holding.setGainLoss(stockDao.getOpen(portfolio.getIsin())-portfolio.getBuyPrice());
 
             holdings.add(holding);
 
-            totalHolding += stockDao.getOpen(portfolio.getId())*portfolio.getQuantity();
+            totalHolding += stockDao.getOpen(portfolio.getIsin())*portfolio.getQuantity();
             totalBuyPrice += portfolio.getBuyPrice()*portfolio.getQuantity();
         }
 

@@ -6,16 +6,18 @@ import lombok.*;
 
 @Entity
 @Data
-@RequiredArgsConstructor
-//@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table
+
 public class Portfolio {
 
     @Id
-    private String Id;
     private String isin;
-    private String name;
+
     private Integer Quantity;
+
     private Double BuyPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)

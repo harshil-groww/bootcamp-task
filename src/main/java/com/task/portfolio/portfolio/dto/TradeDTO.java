@@ -11,10 +11,8 @@ import lombok.*;
 import java.util.Date;
 
 @Data
-@Builder
+@RequiredArgsConstructor
 public class TradeDTO {
-
-    private String id;
 
     @NotBlank (message = "userId can not be empty")
     private Long userId;
@@ -22,10 +20,7 @@ public class TradeDTO {
     @NotBlank (message = "isin can not be empty")
     private String isin;
 
-    @PastOrPresent (message = "Trade date can not be in future")
-    private Date txnDate;
-
-    private TradeType typeOfTrade;
+    private String typeOfTrade;
 
     @Positive (message = "quantity can not be non positive")
     private Integer quantity;
