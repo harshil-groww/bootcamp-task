@@ -1,29 +1,36 @@
 package com.task.portfolio.portfolio.dao;
 
 import com.task.portfolio.portfolio.entity.sql.Portfolio;
+//import com.task.portfolio.portfolio.entity.sql.User;
 import com.task.portfolio.portfolio.entity.sql.User;
 import com.task.portfolio.portfolio.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class UserDao {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
 
-    public User getUser(String userId) {
-        Optional<User> user = userRepository.findById(userId);
+    public User addUser(User user)
+    {
+        return userRepository.save(user);
+    }
+    public User getUser(Long userId) {
+        Optional<User> userDetails = userRepository.findById(userId);
 
-        if (user.isEmpty()) {
+        if (userDetails.isEmpty()) {
 //            throw exception
         }
 
-        return user.get();
+        return userDetails.get();
     }
-    public List<Portfolio> getPortfolios(String userId) {
+    public List<Portfolio> getPortfolios(Long userId) {
 
         User user = getUser(userId);
 

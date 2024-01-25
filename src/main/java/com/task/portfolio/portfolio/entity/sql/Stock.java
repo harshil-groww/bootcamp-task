@@ -2,6 +2,7 @@ package com.task.portfolio.portfolio.entity.sql;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
@@ -9,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
+@Table
 public class Stock {
 
     @Id

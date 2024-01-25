@@ -5,19 +5,20 @@ import com.task.portfolio.portfolio.ResponseDTO.PortfolioResponse;
 import com.task.portfolio.portfolio.dao.PortfolioDao;
 import com.task.portfolio.portfolio.dao.StockDao;
 import com.task.portfolio.portfolio.entity.sql.Portfolio;
-import com.task.portfolio.portfolio.service.PortfolioServices;
+import com.task.portfolio.portfolio.service.UserServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 @RequiredArgsConstructor
-public class PortfoliosServicesImpl implements PortfolioServices {
+public class UserServicesImpl implements UserServices {
 
     private PortfolioDao portfolioDao;
     private StockDao stockDao;
 
     @Override
-    public PortfolioResponse getResponse(String userId) {
+    public PortfolioResponse getPortfolio(Long userId) {
 
         PortfolioResponse portfolioResponse = new PortfolioResponse();
 //        portfolioResponse.setHoldings(null);

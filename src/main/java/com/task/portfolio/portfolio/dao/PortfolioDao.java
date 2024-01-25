@@ -2,12 +2,12 @@ package com.task.portfolio.portfolio.dao;
 
 import com.task.portfolio.portfolio.dto.TradeDTO;
 import com.task.portfolio.portfolio.entity.sql.Portfolio;
+import com.task.portfolio.portfolio.entity.sql.Stock;
 import com.task.portfolio.portfolio.entity.sql.User;
 import com.task.portfolio.portfolio.repository.PortfolioRepository;
 import com.task.portfolio.portfolio.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,15 +17,16 @@ public class PortfolioDao {
     private PortfolioRepository portfolioRepository;
     private UserRepository userRepository;
     private UserDao userDao;
+    private StockDao stockDao;
 
 
-    public List<Portfolio> getAllPortfolios(String userId)
+    public List<Portfolio> getAllPortfolios(Long userId)
     {
         User user = userDao.getUser(userId);
         return user.getPortfolios();
     }
 
-    public void addToPortfolio(String userId, String isin, Integer qnt, Double price) {
+    public void addToPortfolio(Long userId, String isin, Integer qnt, Double price) {
 
         User user = userDao.getUser(userId);
 
@@ -41,20 +42,46 @@ public class PortfolioDao {
         addToPortfolio(tradeDTO.getUserId(), tradeDTO.getIsin(), tradeDTO.getQuantity(), price);
     }
 
-    public void addQuantity(Integer quantityToAdd, String isin, String userId){
-        User user = userDao.getUser(userId);
+    public Portfolio getPortfolio(String isin, User user)
+    {
         Optional<Portfolio> portfolio = portfolioRepository.findByIsinAndUser(isin, user);
-
         if(portfolio.isEmpty())
         {
             //E
         }
 
-        portfolio.get().setQuantity(portfolio.get().getQuantity()+quantityToAdd);
-        portfolioRepository.save(portfolio.get());
+        return portfolio.get();
+    }
+    public void addQuantity(Integer quantityToAdd, String isin, Long userId){
+        User user = userDao.getUser(userId);
+        Portfolio portfolio = getPortfolio(isin, user);
+        Stock stock = stockDao.getStock(isin);
+
+        Integer currQuantity = portfolio.getQuantity();
+        Integer newQuantity = currQuantity+quantityToAdd;
+
+        Double newBuyPrice = (portfolio.getBuyPrice()*currQuantity)+(stock.getOpen()*quantityToAdd);
+        newBuyPrice = newBuyPrice/newQuantity;
+
+        portfolio.setQuantity(newQuantity);
+        portfolio.setBuyPrice(newBuyPrice);
+        portfolioRepository.save(portfolio);
     }
 
-    public boolean doesUserHaveStocks(String isin, String userId)
+    public void removeQuantity(Integer quantityToRemove, String isin, Long userId){
+        User user = userDao.getUser(userId);
+        Portfolio portfolio = getPortfolio(isin, user);
+
+        Integer currQuantity = portfolio.getQuantity();
+        Integer newQuantity = currQuantity-quantityToRemove;
+
+        portfolio.setQuantity(newQuantity);
+        portfolioRepository.save(portfolio);
+    }
+
+
+
+    public boolean UserHaveStocks(String isin, Long userId)
     {
         User user = userDao.getUser(userId);
 

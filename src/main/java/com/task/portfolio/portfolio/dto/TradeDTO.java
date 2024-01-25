@@ -17,7 +17,7 @@ public class TradeDTO {
     private String id;
 
     @NotBlank (message = "userId can not be empty")
-    private String userId;
+    private Long userId;
 
     @NotBlank (message = "isin can not be empty")
     private String isin;

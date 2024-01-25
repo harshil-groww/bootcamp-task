@@ -5,27 +5,18 @@ import com.task.portfolio.portfolio.dao.StockDao;
 import com.task.portfolio.portfolio.dao.UserDao;
 import com.task.portfolio.portfolio.dto.TradeDTO;
 import com.task.portfolio.portfolio.entity.sql.Portfolio;
-import com.task.portfolio.portfolio.entity.sql.Stock;
+//import com.task.portfolio.portfolio.entity.sql.User;
 import com.task.portfolio.portfolio.entity.sql.User;
 import com.task.portfolio.portfolio.enums.TradeType;
-import com.task.portfolio.portfolio.repository.PortfolioRepository;
-import com.task.portfolio.portfolio.repository.StockRepository;
-import com.task.portfolio.portfolio.repository.TradeRepository;
-import com.task.portfolio.portfolio.repository.UserRepository;
 import com.task.portfolio.portfolio.service.TradeServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TradeServicesImpl implements TradeServices {
-
-    private final TradeRepository tradeRepository;
-    private final PortfolioRepository portfolioRepository;
-    private final UserRepository userRepository;
-    private final StockRepository stockRepository;
 
     private final UserDao userDao;
     private final PortfolioDao portfolioDao;
@@ -34,29 +25,25 @@ public class TradeServicesImpl implements TradeServices {
     @Override
     public void sellTrade(TradeDTO tradeDTO) {
 
-        Optional<User> user = userRepository.findById(tradeDTO.getUserId());
-        Optional<Portfolio> portfolio = portfolioRepository.findByIsinAndUser(tradeDTO.getIsin(), user.get());
-        if (user.isEmpty() || portfolio.isEmpty()) {
-            //E
-        }
+        User user = userDao.getUser(tradeDTO.getUserId());
+        Portfolio portfolio = portfolioDao.getPortfolio(tradeDTO.getIsin(), user);
 
-        Integer currentQnt = portfolio.get().getQuantity();
+        Integer currentQnt = portfolio.getQuantity();
         Integer askedQnt = tradeDTO.getQuantity();
 
         boolean stocksAreAvailable = currentQnt >= askedQnt;
 
-        if (!stocksAreAvailable) {
+        if (portfolioDao.UserHaveStocks(tradeDTO.getIsin(),tradeDTO.getUserId()) || !stocksAreAvailable) {
             //E
         }
 
-        Integer qntAfterTrade = currentQnt - askedQnt;
-
+        portfolioDao.removeQuantity(tradeDTO.getQuantity(), tradeDTO.getIsin(), tradeDTO.getUserId());
     }
 
     @Override
     public void buyTrade(TradeDTO tradeDTO) {
 
-        if (portfolioDao.doesUserHaveStocks(tradeDTO.getIsin(), tradeDTO.getUserId())) {
+        if (portfolioDao.UserHaveStocks(tradeDTO.getIsin(), tradeDTO.getUserId())) {
             portfolioDao.addQuantity(tradeDTO.getQuantity(), tradeDTO.getIsin(), tradeDTO.getUserId());
         } else {
             portfolioDao.addToPortfolio(tradeDTO, stockDao.getOpen(tradeDTO.getIsin()));
