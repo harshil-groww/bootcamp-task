@@ -7,7 +7,6 @@ import com.task.portfolio.portfolio.dto.TradeDTO;
 import com.task.portfolio.portfolio.entity.sql.Portfolio;
 //import com.task.portfolio.portfolio.entity.sql.User;
 import com.task.portfolio.portfolio.entity.sql.User;
-import com.task.portfolio.portfolio.enums.TradeType;
 import com.task.portfolio.portfolio.service.TradeServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

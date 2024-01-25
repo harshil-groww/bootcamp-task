@@ -1,6 +1,5 @@
 package com.task.portfolio.portfolio.dto;
 
-import com.task.portfolio.portfolio.enums.TradeType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
