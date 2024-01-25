@@ -20,14 +20,14 @@ public class TradeController {
     private final TradeServices tradeServices;
 
     @PostMapping("/add")
-    public ResponseEntity<ResponseMessage> addTrade(@Valid @RequestBody TradeDTO tradeDTO){
+    public ResponseEntity<ResponseMessage> addTrade(@Valid @RequestBody TradeDTO tradeDTO) {
 
         System.out.println(tradeDTO);
         try {
             tradeServices.addTrade(tradeDTO);
             String message = "trade recorded successfully";
             return new ResponseEntity<>(new ResponseMessage(message), HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             String message = e.getMessage();
             return new ResponseEntity<>(new ResponseMessage(message), HttpStatus.INTERNAL_SERVER_ERROR);
         }

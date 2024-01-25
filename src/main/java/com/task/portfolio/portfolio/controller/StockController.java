@@ -30,9 +30,9 @@ public class StockController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ResponseMessage> updateStocks(@RequestParam("file")MultipartFile file){
+    public ResponseEntity<ResponseMessage> updateStocks(@RequestParam("file") MultipartFile file) {
 
-        if(stockServices.isCsv(file)) {
+        if (stockServices.isCsv(file)) {
             try {
                 stockServices.updateStock(file);
 

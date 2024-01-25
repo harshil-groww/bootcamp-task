@@ -18,10 +18,10 @@ public class UserDao {
     private final UserRepository userRepository;
 
 
-    public User addUser(User user)
-    {
+    public User addUser(User user) {
         return userRepository.save(user);
     }
+
     public User getUser(Long userId) {
         Optional<User> userDetails = userRepository.findById(userId);
 
@@ -31,6 +31,7 @@ public class UserDao {
 
         return userDetails.get();
     }
+
     public List<Portfolio> getPortfolios(Long userId) {
 
         User user = getUser(userId);

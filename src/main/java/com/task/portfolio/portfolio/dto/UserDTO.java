@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 public class UserDTO {
 
     private String Id;
-    @Size (min = 2, message = "name must be of at least two characters")
+    @Size(min = 2, message = "name must be of at least two characters")
     private String Name;
     @Pattern(regexp = "\\d{10}", message = "phone number must contain 10 numberic characters")
     private String PhoneNo;

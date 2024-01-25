@@ -17,35 +17,31 @@ public class StockDao {
     public Stock getStock(String id) {
         Optional<Stock> stock = stockRepository.findById(id);
 
-        if(stock.isEmpty())
-        {
+        if (stock.isEmpty()) {
             throw new NotFoundException("stock not found");
         }
         return stock.get();
     }
 
-    public Double getOpen (String id){
+    public Double getOpen(String id) {
         Stock stock = getStock(id);
 
         return stock.getOpen();
     }
 
-    public boolean stockIsAvailable(String isin)
-    {
+    public boolean stockIsAvailable(String isin) {
         Optional<Stock> stock = stockRepository.findById(isin);
         return stock.isPresent();
     }
-    public void updateStock(StockDTO stockDTO)
-    {
+
+    public void updateStock(StockDTO stockDTO) {
         Stock stock = null;
 
-        if(!stockIsAvailable(stockDTO.getIsin()))
-        {
+        if (!stockIsAvailable(stockDTO.getIsin())) {
             stock = new Stock();
             stock.setId(stockDTO.getIsin());
             stock.setName(stockDTO.getName());
-        }
-        else {
+        } else {
             stock = getStock(stockDTO.getIsin());
         }
 

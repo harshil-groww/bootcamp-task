@@ -13,15 +13,15 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class TradeDTO {
 
-    @NotBlank (message = "userId can not be empty")
+    @NotBlank(message = "userId can not be empty")
     private Long userId;
 
-    @NotBlank (message = "isin can not be empty")
+    @NotBlank(message = "isin can not be empty")
     private String isin;
 
     private String typeOfTrade;
 
-    @Positive (message = "quantity can not be non positive")
+    @Positive(message = "quantity can not be non positive")
     private Integer quantity;
 
 }

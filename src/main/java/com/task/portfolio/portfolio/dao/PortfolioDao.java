@@ -22,8 +22,7 @@ public class PortfolioDao {
     private final StockDao stockDao;
 
 
-    public List<Portfolio> getAllPortfolios(Long userId)
-    {
+    public List<Portfolio> getAllPortfolios(Long userId) {
         User user = userDao.getUser(userId);
         return user.getPortfolios();
     }
@@ -42,12 +41,12 @@ public class PortfolioDao {
 
         portfolioRepository.save(portfolio);
     }
-    public void addToPortfolio(TradeDTO tradeDTO, Double price){
+
+    public void addToPortfolio(TradeDTO tradeDTO, Double price) {
         addToPortfolio(tradeDTO.getUserId(), tradeDTO.getIsin(), tradeDTO.getQuantity(), price);
     }
 
-    public Portfolio getPortfolio(String isin, User user)
-    {
+    public Portfolio getPortfolio(String isin, User user) {
         Optional<Portfolio> portfolio = portfolioRepository.findByIsinAndUser(isin, user);
 //        if(portfolio.isEmpty())
 //        {
@@ -56,40 +55,39 @@ public class PortfolioDao {
 
         return portfolio.get();
     }
-    public void addQuantity(Integer quantityToAdd, String isin, Long userId){
+
+    public void addQuantity(Integer quantityToAdd, String isin, Long userId) {
         User user = userDao.getUser(userId);
         Portfolio portfolio = getPortfolio(isin, user);
         Stock stock = stockDao.getStock(isin);
 
         Integer currQuantity = portfolio.getQuantity();
-        Integer newQuantity = currQuantity+quantityToAdd;
+        Integer newQuantity = currQuantity + quantityToAdd;
 
-        Double newBuyPrice = (portfolio.getBuyPrice()*currQuantity)+(stock.getOpen()*quantityToAdd);
-        newBuyPrice = newBuyPrice/newQuantity;
+        Double newBuyPrice = (portfolio.getBuyPrice() * currQuantity) + (stock.getOpen() * quantityToAdd);
+        newBuyPrice = newBuyPrice / newQuantity;
 
         portfolio.setQuantity(newQuantity);
         portfolio.setBuyPrice(newBuyPrice);
         portfolioRepository.save(portfolio);
     }
 
-    public void removeQuantity(Integer quantityToRemove, String isin, Long userId){
+    public void removeQuantity(Integer quantityToRemove, String isin, Long userId) {
         User user = userDao.getUser(userId);
         Portfolio portfolio = getPortfolio(isin, user);
 
         Integer currQuantity = portfolio.getQuantity();
-        Integer newQuantity = currQuantity-quantityToRemove;
+        Integer newQuantity = currQuantity - quantityToRemove;
 
         portfolio.setQuantity(newQuantity);
         portfolioRepository.save(portfolio);
     }
 
 
-
-    public boolean UserHaveStocks(String isin, Long userId)
-    {
+    public boolean UserHaveStocks(String isin, Long userId) {
         User user = userDao.getUser(userId);
 
-        Optional<Portfolio> portfolio= portfolioRepository.findByIsinAndUser(isin, user);
+        Optional<Portfolio> portfolio = portfolioRepository.findByIsinAndUser(isin, user);
 
         return portfolio.isPresent();
     }

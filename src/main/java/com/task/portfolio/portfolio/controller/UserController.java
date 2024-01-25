@@ -25,27 +25,25 @@ import java.util.List;
 public class UserController {
 
     private final UserDao userDao;
-    @PostMapping("/add")
-    public ResponseEntity<?> addUser(@Valid @RequestBody User user){
 
-        try{
+    @PostMapping("/add")
+    public ResponseEntity<?> addUser(@Valid @RequestBody User user) {
+
+        try {
             user = userDao.addUser(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
             return new ResponseEntity<>(new ResponseMessage("Failed to add user"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/portfolio")
-    public ResponseEntity<?> getPortfolios(@RequestParam Long userId)
-    {
-        try{
+    public ResponseEntity<?> getPortfolios(@RequestParam Long userId) {
+        try {
             List<Portfolio> portfolios = userDao.getPortfolios(userId);
             return new ResponseEntity<>(portfolios, HttpStatus.OK);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }

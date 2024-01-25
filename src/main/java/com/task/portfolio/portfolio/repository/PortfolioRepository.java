@@ -9,8 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface PortfolioRepository extends JpaRepository<Portfolio, String> {
-
     Optional<Portfolio> findByIsinAndUser(String isin, User user);
-
-
 }
