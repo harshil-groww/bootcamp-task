@@ -9,7 +9,8 @@ import com.task.portfolio.portfolio.service.UserServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+
 @Service
 @RequiredArgsConstructor
 public class UserServicesImpl implements UserServices {
@@ -23,7 +24,7 @@ public class UserServicesImpl implements UserServices {
         PortfolioResponse portfolioResponse = new PortfolioResponse();
 //        portfolioResponse.setHoldings(null);
 
-        List<Holdings> holdings = null;
+        List<Holdings> holdings = new ArrayList<Holdings>();
         List<Portfolio> portfolios = portfolioDao.getAllPortfolios(userId);
 
         double totalGainLoss = 0;
@@ -54,12 +55,17 @@ public class UserServicesImpl implements UserServices {
 
         portfolioResponse.setHoldings(holdings);
 
-        portfolioResponse.setTotalHoldings(totalHolding);
-        portfolioResponse.setTotalBuyPrice(totalBuyPrice);
+        portfolioResponse.setTotalHoldings(round(totalHolding));
+        portfolioResponse.setTotalBuyPrice(round(totalBuyPrice));
 
         portfolioResponse.setTotalProfitLoss(totalGainLoss);
         portfolioResponse.setTotalProfitPercentage(percentageGainLoss);
 
         return portfolioResponse;
+    }
+
+    private Double round(Double val){
+//        return val;
+        return (double) ((Math.round(val*100))/100.00);
     }
 }

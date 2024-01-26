@@ -1,10 +1,12 @@
 package com.task.portfolio.portfolio.controller;
 
+import com.task.portfolio.portfolio.ResponseDTO.PortfolioResponse;
 import com.task.portfolio.portfolio.dao.UserDao;
 import com.task.portfolio.portfolio.dto.UserDTO;
 import com.task.portfolio.portfolio.entity.sql.Portfolio;
 import com.task.portfolio.portfolio.entity.sql.User;
 import com.task.portfolio.portfolio.message.ResponseMessage;
+import com.task.portfolio.portfolio.service.UserServices;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +27,7 @@ import java.util.List;
 public class UserController {
 
     private final UserDao userDao;
+    private final UserServices userServices;
 
     @PostMapping("/add")
     public ResponseEntity<?> addUser(@Valid @RequestBody User user) {
@@ -41,7 +44,7 @@ public class UserController {
     @GetMapping("/portfolio")
     public ResponseEntity<?> getPortfolios(@RequestParam Long userId) {
         try {
-            List<Portfolio> portfolios = userDao.getPortfolios(userId);
+            PortfolioResponse portfolios = userServices.getPortfolio(userId);
             return new ResponseEntity<>(portfolios, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.NOT_FOUND);
