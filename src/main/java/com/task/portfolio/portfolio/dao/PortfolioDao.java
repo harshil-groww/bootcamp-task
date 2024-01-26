@@ -67,6 +67,8 @@ public class PortfolioDao {
         Double newBuyPrice = (portfolio.getBuyPrice() * currQuantity) + (stock.getOpen() * quantityToAdd);
         newBuyPrice = newBuyPrice / newQuantity;
 
+        newBuyPrice = Double.valueOf(Math.round(newBuyPrice*100))/100;
+
         portfolio.setQuantity(newQuantity);
         portfolio.setBuyPrice(newBuyPrice);
         portfolioRepository.save(portfolio);

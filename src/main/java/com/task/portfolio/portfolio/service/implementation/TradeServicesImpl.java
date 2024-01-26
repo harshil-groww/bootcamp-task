@@ -1,5 +1,7 @@
 package com.task.portfolio.portfolio.service.implementation;
 
+import com.task.portfolio.portfolio.Exception.NotEnoughStocksException;
+import com.task.portfolio.portfolio.Exception.NotFoundException;
 import com.task.portfolio.portfolio.dao.PortfolioDao;
 import com.task.portfolio.portfolio.dao.StockDao;
 import com.task.portfolio.portfolio.dao.UserDao;
@@ -32,8 +34,8 @@ public class TradeServicesImpl implements TradeServices {
 
         boolean stocksAreAvailable = currentQnt >= askedQnt;
 
-        if (portfolioDao.UserHaveStocks(tradeDTO.getIsin(),tradeDTO.getUserId()) || !stocksAreAvailable) {
-            //E
+        if (!portfolioDao.UserHaveStocks(tradeDTO.getIsin(),tradeDTO.getUserId()) || !stocksAreAvailable) {
+            throw new NotEnoughStocksException("user does not have enough stocks");
         }
 
         portfolioDao.removeQuantity(tradeDTO.getQuantity(), tradeDTO.getIsin(), tradeDTO.getUserId());
@@ -58,7 +60,7 @@ public class TradeServicesImpl implements TradeServices {
         } else if (tradeDTO.getTypeOfTrade().equalsIgnoreCase("buy")) {
             buyTrade(tradeDTO);
         } else {
-            //E
+            throw new RuntimeException("ambiguous trade type");
         }
     }
 

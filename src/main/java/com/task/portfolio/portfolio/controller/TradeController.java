@@ -29,7 +29,7 @@ public class TradeController {
             return new ResponseEntity<>(new ResponseMessage(message), HttpStatus.OK);
         } catch (Exception e) {
             String message = e.getMessage();
-            return new ResponseEntity<>(new ResponseMessage(message), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseMessage(message), HttpStatus.FORBIDDEN);
         }
 
     }
