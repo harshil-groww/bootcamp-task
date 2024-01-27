@@ -7,6 +7,7 @@ import com.task.portfolio.portfolio.dao.StockDao;
 import com.task.portfolio.portfolio.entity.sql.Portfolio;
 import com.task.portfolio.portfolio.service.UserServices;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,7 +23,6 @@ public class UserServicesImpl implements UserServices {
     public PortfolioResponse getPortfolio(Long userId) {
 
         PortfolioResponse portfolioResponse = new PortfolioResponse();
-//        portfolioResponse.setHoldings(null);
 
         List<Holdings> holdings = new ArrayList<Holdings>();
         List<Portfolio> portfolios = portfolioDao.getAllPortfolios(userId);
@@ -41,7 +41,7 @@ public class UserServicesImpl implements UserServices {
             holding.setQuantity(portfolio.getQuantity());
             holding.setBuyPrice(portfolio.getBuyPrice());
             holding.setCurrentPrice(stockDao.getOpen(portfolio.getIsin()));
-            holding.setGainLoss(stockDao.getOpen(portfolio.getIsin())-portfolio.getBuyPrice());
+            holding.setGainLoss(round((stockDao.getOpen(portfolio.getIsin())-portfolio.getBuyPrice())*portfolio.getQuantity()));
 
             holdings.add(holding);
 
@@ -50,7 +50,9 @@ public class UserServicesImpl implements UserServices {
         }
 
         totalGainLoss = totalHolding - totalBuyPrice;
-        percentageGainLoss = totalGainLoss/totalBuyPrice;
+        if(totalBuyPrice!=0) {
+            percentageGainLoss = totalGainLoss / totalBuyPrice;
+        }
         percentageGainLoss *= 100;
 
         portfolioResponse.setHoldings(holdings);
@@ -58,14 +60,13 @@ public class UserServicesImpl implements UserServices {
         portfolioResponse.setTotalHoldings(round(totalHolding));
         portfolioResponse.setTotalBuyPrice(round(totalBuyPrice));
 
-        portfolioResponse.setTotalProfitLoss(totalGainLoss);
-        portfolioResponse.setTotalProfitPercentage(percentageGainLoss);
+        portfolioResponse.setTotalProfitLoss(round(totalGainLoss));
+        portfolioResponse.setTotalProfitPercentage(round(percentageGainLoss));
 
         return portfolioResponse;
     }
 
     private Double round(Double val){
-//        return val;
-        return (double) ((Math.round(val*100))/100.00);
+        return ((Math.round(val*100))/100.00);
     }
 }

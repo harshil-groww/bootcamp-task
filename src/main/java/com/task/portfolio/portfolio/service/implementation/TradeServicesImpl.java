@@ -49,7 +49,6 @@ public class TradeServicesImpl implements TradeServices {
         } else {
             portfolioDao.addToPortfolio(tradeDTO, stockDao.getOpen(tradeDTO.getIsin()));
         }
-
     }
 
     @Override

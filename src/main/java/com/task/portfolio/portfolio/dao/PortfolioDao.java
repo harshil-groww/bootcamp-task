@@ -7,6 +7,8 @@ import com.task.portfolio.portfolio.entity.sql.Stock;
 import com.task.portfolio.portfolio.entity.sql.User;
 import com.task.portfolio.portfolio.repository.PortfolioRepository;
 import com.task.portfolio.portfolio.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+//@AllArgsConstructor
+//@NoArgsConstructor
 @RequiredArgsConstructor
 public class PortfolioDao {
 

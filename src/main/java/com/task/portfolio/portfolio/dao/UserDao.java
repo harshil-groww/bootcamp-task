@@ -17,7 +17,6 @@ public class UserDao {
 
     private final UserRepository userRepository;
 
-
     public User addUser(User user) {
         return userRepository.save(user);
     }
