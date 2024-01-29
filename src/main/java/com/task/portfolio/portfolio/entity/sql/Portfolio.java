@@ -16,9 +16,9 @@ public class Portfolio {
     @Id
     private String isin;
 
-    private Integer Quantity;
+    private Integer quantity;
 
-    private Double BuyPrice;
+    private Double buyPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

@@ -61,6 +61,7 @@ public class TradeServiceTests {
 
     @Test
     void wrongTradeType_Test(){
+
         assertThrows(RuntimeException.class, () -> {
             tradeServices.addTrade(new TradeDTO(1L,"123","abs",3));
         });

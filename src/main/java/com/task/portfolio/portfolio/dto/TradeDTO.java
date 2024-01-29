@@ -1,10 +1,7 @@
 package com.task.portfolio.portfolio.dto;
 
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.Date;
@@ -14,7 +11,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class TradeDTO {
 
-    @NotBlank(message = "userId can not be empty")
+    @NotNull(message = "userId can not be empty")
     private Long userId;
 
     @NotBlank(message = "isin can not be empty")

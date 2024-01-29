@@ -5,6 +5,7 @@ import com.task.portfolio.portfolio.ResponseDTO.Holdings;
 import com.task.portfolio.portfolio.ResponseDTO.PortfolioResponse;
 import com.task.portfolio.portfolio.dao.PortfolioDao;
 import com.task.portfolio.portfolio.dao.StockDao;
+import com.task.portfolio.portfolio.dao.UserDao;
 import com.task.portfolio.portfolio.entity.sql.Portfolio;
 import com.task.portfolio.portfolio.entity.sql.Stock;
 import com.task.portfolio.portfolio.entity.sql.User;
@@ -33,6 +34,7 @@ public class UserServiceTests {
 //
 //    @Mock
     private StockDao stockDao;
+    private UserDao userDao;
 //
 //    @InjectMocks
     private UserServicesImpl userServices;
@@ -41,7 +43,8 @@ public class UserServiceTests {
     void setup(){
         stockDao = mock(StockDao.class);
         portfolioDao = mock(PortfolioDao.class);
-        userServices = new UserServicesImpl(portfolioDao, stockDao);
+        userDao = mock(UserDao.class);
+        userServices = new UserServicesImpl(portfolioDao, stockDao,userDao);
     }
     @Test
     void UserHasNotTradedTest(){

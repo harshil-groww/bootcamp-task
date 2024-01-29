@@ -21,19 +21,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("users")
 public class UserController {
 
-    private final UserDao userDao;
     private final UserServices userServices;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addUser(@Valid @RequestBody User user) {
+    public ResponseEntity<?> addUser(@Valid @RequestBody UserDTO userDTO) {
 
         try {
-            user = userDao.addUser(user);
+            User user = userServices.addUser(userDTO);
+//            System.out.println("gaga");
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (Exception e) {
 

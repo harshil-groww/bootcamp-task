@@ -36,7 +36,7 @@ public class StockController {
             try {
                 stockServices.updateStock(file);
 
-                String message = "Stocks updated successfully";
+                String message = "stocks updated successfully";
                 ResponseMessage responseMessage = new ResponseMessage(message);
 
                 return new ResponseEntity<>(responseMessage, HttpStatus.OK);

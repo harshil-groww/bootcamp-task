@@ -4,7 +4,10 @@ import com.task.portfolio.portfolio.ResponseDTO.Holdings;
 import com.task.portfolio.portfolio.ResponseDTO.PortfolioResponse;
 import com.task.portfolio.portfolio.dao.PortfolioDao;
 import com.task.portfolio.portfolio.dao.StockDao;
+import com.task.portfolio.portfolio.dao.UserDao;
+import com.task.portfolio.portfolio.dto.UserDTO;
 import com.task.portfolio.portfolio.entity.sql.Portfolio;
+import com.task.portfolio.portfolio.entity.sql.User;
 import com.task.portfolio.portfolio.service.UserServices;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -18,6 +21,7 @@ public class UserServicesImpl implements UserServices {
 
     private final PortfolioDao portfolioDao;
     private final StockDao stockDao;
+    private final UserDao userDao;
 
     @Override
     public PortfolioResponse getPortfolio(Long userId) {
@@ -64,6 +68,17 @@ public class UserServicesImpl implements UserServices {
         portfolioResponse.setTotalProfitPercentage(round(percentageGainLoss));
 
         return portfolioResponse;
+    }
+
+    public User addUser(UserDTO userDTO)
+    {
+        User user = new User();
+        user.setEmailId(userDTO.getEmailId());
+        user.setPhoneNo(userDTO.getPhoneNo());
+        user.setPan(userDTO.getPan());
+        user.setName(userDTO.getName());
+
+        return userDao.addUser(user);
     }
 
     private Double round(Double val){

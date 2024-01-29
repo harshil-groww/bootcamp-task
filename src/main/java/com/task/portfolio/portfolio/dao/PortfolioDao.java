@@ -28,7 +28,8 @@ public class PortfolioDao {
 
     public List<Portfolio> getAllPortfolios(Long userId) {
         User user = userDao.getUser(userId);
-        return user.getPortfolios();
+//        return user.getPortfolios();
+        return portfolioRepository.findPortfoliosByUserAndQuantityGreaterThan(user, 0);
     }
 
     public void addToPortfolio(Long userId, String isin, Integer qnt, Double price) {
@@ -85,6 +86,11 @@ public class PortfolioDao {
         Integer currQuantity = portfolio.getQuantity();
         Integer newQuantity = currQuantity - quantityToRemove;
 
+//        if(newQuantity == 0)
+//        {
+//            portfolioRepository.delete(portfolio);
+//            return;
+//        }
         portfolio.setQuantity(newQuantity);
         portfolioRepository.save(portfolio);
     }
