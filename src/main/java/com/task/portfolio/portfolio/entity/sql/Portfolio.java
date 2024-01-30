@@ -20,6 +20,8 @@ public class Portfolio {
 
     private Double buyPrice;
 
+    private Boolean isDeleted=false;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private User user;

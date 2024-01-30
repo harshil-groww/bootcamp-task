@@ -93,8 +93,8 @@ public class UserServiceTests {
         user.setPhoneNo("8128475144");
         user.setEmailId("h@gmail.com");
 
-        portfolios.add(new Portfolio("123",1,4.00, user));
-        portfolios.add(new Portfolio("456",2,2.50, user));
+        portfolios.add(new Portfolio("123",1,4.00, false, user));
+        portfolios.add(new Portfolio("456",2,2.50,false, user));
 
         List<Holdings> portfolioResponses = new ArrayList<>();
         portfolioResponses.add(new Holdings("abc", "123", 1, 4.00, 1.0, -3.00));

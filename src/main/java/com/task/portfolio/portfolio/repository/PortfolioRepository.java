@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface PortfolioRepository extends JpaRepository<Portfolio, String> {
     Optional<Portfolio> findByIsinAndUser(String isin, User user);
 
-    List<Portfolio> findPortfoliosByUserAndQuantityGreaterThan(User user, Integer qnt);
+    List<Portfolio> findPortfoliosByUserAndIsDeleted(User user, Boolean isDeleted);
 }
